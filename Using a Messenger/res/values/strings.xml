@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">Using a Messenger Inter Process Communication</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="applicationdesc">If you need your service to communicate with remote processes, then you can use a Messenger to provide the interface for your service. This technique allows you to perform interprocess communication (IPC) without the need to use AIDL.</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+</resources>

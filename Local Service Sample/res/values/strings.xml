@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">Local Service Sample</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="application_desc">This is Local Service Sample,Service is as a secondary component running alongside other parts of an application not create new process  When used in this way, by assuming the components are in the same process, you can greatly simplify the interaction between them: clients of the service can simply cast the IBinder they receive from it to a concrete class published by the service.</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_local_service">LocalServiceActivity</string>
+	<string name="btn_showNotification">Show Notification Through bind Service which is bind with this activity</string>
+</resources>

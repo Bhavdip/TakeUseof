@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="app_name">BoundService</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="applicationdesc">This is Demo of Bound Services A bound service is the server in a client-server interface. A bound service allows components (such as activities) to bind to the service, send requests, receive responses, and even perform interprocess communication (IPC). A bound service typically lives only while it serves another application component and does not run in the background indefinitely.</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_useof_bound_services">UseofBoundServices</string>
+
+</resources>
