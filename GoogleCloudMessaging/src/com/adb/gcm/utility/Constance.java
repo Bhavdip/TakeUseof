@@ -13,5 +13,6 @@ public class Constance {
 	
 	final public static String INTENT_REGISTRATION_RETRY = "com.adb.gcm.intent.RETRY";
 	final public static String INTENT_UPDATE_UI = "com.adb.gcm.intent.UPDATE.UI";
-
+	
+	
 }
