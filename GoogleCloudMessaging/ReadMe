@@ -1,0 +1,139 @@
+/*** Google Cloud Messaging ****/
+
+=> creating GCM API Project Using Your Google Account [ https://code.google.com/apis/console ]
+
+		* if you have not create project API then you prompt create Project do that.
+		* Click Create project. Your browser URL will change to something like: https://code.google.com/apis/console/#project:4815162342
+		* Take note of the value after #project: (4815162342 in this example). This is your project ID, and it will be used later on as the GCM sender ID.
+		
+=> Enabling Google Messaging Services
+
+		* To Enable the GCM Services
+			1.in the main api console page select | Services.
+			2.Turn Google Cloud Messaging Service Turn on 
+			3.accept terms and conditions.
+			
+=> Obtaining API Key
+		
+		* In the main Google APIs Console page, select API Access.
+		* Click Create new Server key. Either a server key or a browser key should work. The advantage to using a server key is that it allows you to whitelist IP addresses.
+		* Click create
+		* Take note of the API key value (YourKeyWillBeShownHere) in this example, as it will be used later on.
+		
+=> Install helper library
+
+		* To perform cloud messaging,you must first install the helper library
+		* Form your sdk manager install Extras | Google Cloud Messaging for Android library
+		* This is create [GCM] directory under [extras/google] directory in your sdk root folder in my case : [ D:\Bhavdip\IECLIPSE\AndroidSDK\extras\google\gcm ]
+		* Under this directory it containing [ gcm-client, gcm-server, samples/gcm-demo-client, samples/gcm-demo-server, and samples/gcm-demo-appengine. ]
+		
+=>GCM Architecture Overview [ You must know before start GCM Uses]
+	
+	* There is two things key terms
+		- components
+		- Credentials
+		
+		[ components ]:  
+			 
+			 [ Mobile Devices ] :
+			 	The devices that has android application uses GCM Must have at least Android 2.2 with Android Play store is installed and 
+			 	it has at least one google account logged in device.means you must add one google account in device.
+			 	
+			 [3rd party application server ]
+			 	it is used to send message to device 
+			 
+			 [ GCM Server ]
+			 
+			 this is come in picture when 3 rd party server send to GCM,and GCM server send those message to device.
+			 
+	    [ Credentials ][ The IDs and tokens that are used in different stages of GCM to ensure that all parties have been authenticated, and that the message is going to the correct place] :
+	    
+	    		[ Sender ID ] 
+	    			-	A Project ID You acquire from your Project console like this after #Project: [4815162342] link :[  https://code.google.com/apis/console/#project:4815162342 ]
+	    			-	The sender Id is used in device registration process to identify Android application that is permitted to send message to device.
+	    	
+	    		[ Application ID ]
+	    			
+	    			-	Then Android application that is register to receive messages.the android application is identified by the package name define in manifest.xml file.
+	    			-	This is ensure that the message are targeted to correct android application.
+	    			
+	    		[ Registration ID ]
+	    		
+	    			-	An ID issue by GCM server to android application that allow it to receive messages.Once the Android application has registration id,it send it to third party application server.
+	    			-	which uses it to identify each device that has registered to receive messages for a given Android application. In other words, a registration ID is tied to a particular Android application running on a particular device.
+	    			
+	    		[ Google User Account ]
+	    		
+	    			-	For GCM to work device must have running a version lower than Android 4.0.4.
+	    			
+	    		[ Sender Auth Token ]
+	    			
+	    			- API key that is used by third party server that gives application server authorized access to google services.
+	    			 	
+	    			  
+	    				
+=> GCM service is free but some time when you try to register application over GCM server then it gives error or need to retry there for we have to try again for registeration 
+   for that they give back -0ff functionality like in android : [ http://developer.android.com/guide/google/gcm/adv.html#reg-state] 
+   
+	   ...
+	if (error != null) {
+	 if ("SERVICE_NOT_AVAILABLE".equals(error)) {
+	 
+		   long backoffTimeMs = // get back-off time from shared preferences
+		   long nextAttempt = SystemClock.elapsedRealtime() + backoffTimeMs;
+		   Intent retryIntent = new Intent("com.example.gcm.intent.RETRY");
+		   retryIntent.putExtra("token", TOKEN);
+		   PendingIntent retryPendingIntent =
+		       PendingIntent.getBroadcast(context, 0, retryIntent, 0);
+		   AlarmManager am = (AlarmManager)   
+		       context.getSystemService(Context.ALARM_SERVICE);
+		   am.set(AlarmManager.ELAPSED_REALTIME, nextAttempt, retryPendingIntent);
+		   backoffTimeMs *= 2; // Next retry should wait longer.
+		   // update back-off time on shared preferences
+		   
+	 } else {
+	   // Unrecoverable error, log it
+	   Log.i(TAG, "Received error: " + error);
+	}
+	...
+	
+	 
+   
+			 	
+			  
+		
+		
+		 
+		
+
+
+			
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Reference link :
+
+	Client Library Documentation 
+		[ http://developer.android.com/guide/google/gcm/client-javadoc/index.html ]
+	Server Library Documentation
+		[ http://developer.android.com/guide/google/gcm/server-javadoc/index.html ]
+		
+		
+			  

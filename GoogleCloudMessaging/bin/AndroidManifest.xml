@@ -1,0 +1,93 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.adb.gcm"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="15" />
+	
+    
+    <permission android:name="com.adb.gcm.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.adb.gcm.permission.C2D_MESSAGE" />
+	
+    <!-- App receives GCM messages. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!-- GCM connects to Google Services. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" 
+        android:name="com.adb.gcm.GoogleCloudApplication">
+        <activity
+            android:name=".GoogleCloud"
+            android:label="@string/title_activity_google_cloude" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+	
+		<!-- Main Service which is start Register device over GCM server and stop service will UnRegister Device over GCM Server -->
+		<!-- We start service allocating new process so it does not affect to activity Process name like [ com.adb.android.gcm.process ] -->
+        <service
+            android:name="com.adb.gcm.services.RegisteringGCMService"
+            android:enabled="true">
+        </service>
+        
+        
+        <!-- when device is register over GCM Server it send to registration id to device to receiver this we make receiver -->
+        <receiver
+            android:name="com.adb.gcm.broadcastreceivers.RegistrationReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.adb.gcm" />
+            </intent-filter>
+        </receiver>
+        
+        
+        <receiver
+            android:name="com.adb.gcm.broadcastreceivers.RetryRegistrationReceiver"
+            android:enabled="true"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.adb.gcm.intent.RETRY" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Receive Message from cloud this BroadCast Receiver is called -->
+       	<receiver android:name="com.adb.gcm.broadcastreceivers.MessageReceiver" android:enabled="true" android:exported="false">
+            	<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+				<category android:name="com.adb.gcm"/>
+			</intent-filter>
+        </receiver>
+        
+       	
+       	<!-- when Boot completed this Broadcast  Receiver is called  -->
+       	<receiver android:name="com.adb.gcm.broadcastreceivers.StartupReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+				<category android:name="android.intent.category.HOME" />
+			</intent-filter>
+		</receiver>
+		
+		<!--  when Shutdown device complete Broadcast  Receiver  is called  -->
+       	<receiver android:name="com.adb.gcm.broadcastreceivers.ShutdownReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.ACTION_SHUTDOWN"/>
+				<category android:name="android.intent.category.HOME" />
+			</intent-filter>
+		</receiver>  
+    	        
+    </application>
+
+</manifest>
